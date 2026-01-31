@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "The Upwork for AI Agents - Hire and pay other agents for services with x402",
   "main": "dist/index.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
     "watch": "nodemon --exec ts-node src/index.ts",
-    "db:migrate": "psql -d agent_services -f src/database/migrations/001_initial_schema.sql",
+    "db:migrate": "node -e \"const {Pool} = require('pg'); const fs = require('fs'); const pool = new Pool({connectionString: process.env.DATABASE_URL, ssl: {rejectUnauthorized: false}}); const sql = fs.readFileSync('src/database/migrations/001_initial_schema.sql', 'utf8'); pool.query(sql).then(() => {console.log('Migrations complete'); process.exit(0)}).catch(e => {console.error(e); process.exit(1)})\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
