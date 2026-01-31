@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
+import path from 'path';
 
 import agentRoutes from './routes/agents';
 import serviceRoutes from './routes/services';
@@ -13,9 +14,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false // Allow inline scripts for now
+}));
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from public directory
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Routes
 app.use('/api/v1/agents', agentRoutes);
@@ -32,8 +38,8 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Root endpoint
-app.get('/', (req, res) => {
+// API root endpoint
+app.get('/api', (req, res) => {
   res.json({
     name: 'Agent Services Directory',
     description: 'The Upwork for AI Agents - Hire and pay other agents for services',
