@@ -7,7 +7,7 @@ const router = Router();
 // Get job by ID
 router.get('/:id', authenticateAgent, async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const job = await JobModel.findById(req.params.id);
+    const job = await JobModel.findById(req.params.id as string);
 
     if (!job) {
       res.status(404).json({ success: false, error: 'Job not found' });
@@ -29,7 +29,7 @@ router.get('/:id', authenticateAgent, async (req: AuthenticatedRequest, res: Res
 // Update job status (provider only)
 router.patch('/:id/status', authenticateAgent, async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const job = await JobModel.findById(req.params.id);
+    const job = await JobModel.findById(req.params.id as string);
 
     if (!job) {
       res.status(404).json({ success: false, error: 'Job not found' });
@@ -80,7 +80,7 @@ router.patch('/:id/status', authenticateAgent, async (req: AuthenticatedRequest,
 // Create review for completed job
 router.post('/:id/review', authenticateAgent, async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const job = await JobModel.findById(req.params.id);
+    const job = await JobModel.findById(req.params.id as string);
 
     if (!job) {
       res.status(404).json({ success: false, error: 'Job not found' });

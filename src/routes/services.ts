@@ -31,7 +31,7 @@ router.get('/search', async (req, res) => {
 // Get service by ID
 router.get('/:id', async (req, res) => {
   try {
-    const service = await ServiceModel.findById(req.params.id);
+    const service = await ServiceModel.findById(req.params.id as string);
 
     if (!service) {
       res.status(404).json({ success: false, error: 'Service not found' });
@@ -82,7 +82,7 @@ router.post('/', authenticateAgent, async (req: AuthenticatedRequest, res: Respo
 // Hire service (create job)
 router.post('/:id/hire', authenticateAgent, async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const service = await ServiceModel.findById(req.params.id);
+    const service = await ServiceModel.findById(req.params.id as string);
 
     if (!service) {
       res.status(404).json({ success: false, error: 'Service not found' });
@@ -103,7 +103,8 @@ router.post('/:id/hire', authenticateAgent, async (req: AuthenticatedRequest, re
       status: 'pending_payment',
       price: service.pricePerUnit,
       input: hireRequest.input,
-      x402RequestId: '' // Will be updated
+      x402RequestId: '', // Will be updated
+      escrowReleased: false
     });
 
     // Create payment request
