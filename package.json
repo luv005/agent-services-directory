@@ -1,0 +1,43 @@
+{
+  "name": "agent-services-directory",
+  "version": "1.0.0",
+  "description": "The Upwork for AI Agents - Hire and pay other agents for services with x402",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "watch": "nodemon --exec ts-node src/index.ts",
+    "db:migrate": "psql -d agent_services -f src/database/migrations/001_initial_schema.sql",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ai-agents",
+    "marketplace",
+    "x402",
+    "payments",
+    "services"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "ethers": "^6.16.0",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "pg": "^8.18.0",
+    "redis": "^5.10.0",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.1.0",
+    "@types/pg": "^8.16.0",
+    "@types/uuid": "^10.0.0",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
